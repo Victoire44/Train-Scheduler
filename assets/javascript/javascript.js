@@ -10,5 +10,28 @@ var firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
-
 var dataBase = firebase.database();
+//Initial values
+var name = "";
+var destination = "";
+var firstTrain = "";
+var frequency = 0;
+
+//Retrieve the value of the user input
+$("#add-train-schedule").on("click", function (event) {
+    event.preventDefault();
+
+    name = $("#train-name").val().trim();
+    destination = $("#destination").val().trim();
+    firstTrain = $("#first-train").val().trim();
+    frequency = $("#frequency").val().trim();
+
+//Push to the database
+    dataBase().ref().push({
+        name: name,
+        destination: destination,
+        firstTrain: firstTrain,
+        frequency: frequency,
+        dateAdded: firebase.database.ServerValue.TIMESTAMP
+    });
+});
