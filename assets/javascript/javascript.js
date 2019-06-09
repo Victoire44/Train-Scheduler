@@ -41,20 +41,32 @@ dataRef.ref().on("child_added", function (childSnapshot) {
 
     var firstTime = childSnapshot.val().firstTrain;
     var trainFrequency = childSnapshot.val().frequency
-
+    //calculate the next arrival and the minutes away
     var firstTimeConverted = moment(firstTime, "HH:mm").subtract(1, "years");
     var diffTime = moment().diff(moment(firstTimeConverted), "minutes");
     var trainRemainder = diffTime % trainFrequency;
     var minutesAway = trainFrequency - trainRemainder;
     var nextArrival = moment().add(minutesAway, "minutes");
     nextArrival = moment(nextArrival).format("hh:mm")
- 
-    $("#current-train-schedule").append("<tr><td class='train-name'>" +
+    // Add the new row in the table
+    $("#current-train-schedule").append("<tr id='row-" + childSnapshot.key + "'><td class='train-name'>" +
         childSnapshot.val().name +
         " </td><td class='train-destination'> " + childSnapshot.val().destination +
         " </td><td  class='first-train-frequency'> " + trainFrequency +
         " </td><td  class='train-time'> " + nextArrival +
-        "</td><td>" + minutesAway + "</td></tr>");
+        "</td><td>" + minutesAway +
+        //Add a button 
+        "</td><td><button class='remove' data-key='" + childSnapshot.key + "'>X</button></td></tr> ");
+    
+    var removebutton = $(".remove")
+    // remove the row when we click on the button
+    removebutton.on("click", function () {
+        // Remove the row in Firebase
+        dataRef.ref().child($(this).attr("data-key")).remove();
+        // Remove the row in the DOM
+        $("#row-" + childSnapshot.key).remove();
+
+    });
 
     // Handle the errors
 }, function (errorObject) {
