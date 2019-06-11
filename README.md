@@ -12,13 +12,13 @@ I use [Firebase](https://firebase.google.com/) to store the train data.
 <br>
 When you complete the form and submit it, a new row appears in a table. 
 It displays the Train Name, the Destination, the Frequency in minutes and calculates:
-* the time at which the next train will departs, in function of the current time
-* the remaining minutes before the next train.
-<br>
+* the time at which the next train will departs, in relation to the current time,
+* the remaining minutes before the next train.<br>
 For these calculations, I use [Moment.js](https://momentjs.com/)
-
 <br>
-When the Frequency or First Train Time inputs are not completed, the "Next Arrival" and "Minutes Away" columns are mark Unknown. 
+
+
+When the Frequency or First Train Time inputs are not completed, the "Next Arrival" and "Minutes Away" columns are marked Unknown. 
 <br>
 It's possible to delete the row by clicking on the cross. 
 
